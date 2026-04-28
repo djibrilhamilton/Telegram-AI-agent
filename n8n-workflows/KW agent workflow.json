@@ -1,0 +1,1612 @@
+{
+  "name": "KW agent workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        96
+      ],
+      "id": "57d18652-abba-4aff-859b-b9c070ff4c2f",
+      "name": "Telegram Trigger",
+      "webhookId": "4b0ae279-c1bb-41cc-a674-3fc99668947b",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "70d52caa-4eff-44b8-8dd9-c0b02267c3dc"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "dc05afec-775a-465c-b7ac-24280eb29dfe",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/today",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "today"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a2416c6f-8ec0-4eec-be96-8bf4e85f60b6",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/tasks",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "tasks"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "20e82ebf-b6bc-47bc-b0fc-a409b04fae1e",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "add"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "35dfeb1a-3c59-426f-b87b-02a09864352f",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/done",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "done"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "30611ea6-e774-486f-8d47-5444e2030af2",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/week",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "week"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "6dce3da5-0f46-451c-87eb-43af01abf209",
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "text"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -16
+      ],
+      "id": "c00e446d-9ba2-4879-ac0e-0841f09f20f7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "users",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.chat.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -640
+      ],
+      "id": "5bbe98fa-9ae6-492a-a870-0fe50d6cbb87",
+      "name": "Check user",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bd67c2d9-5500-49d4-8520-7b3ce6dbb41f",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        -640
+      ],
+      "id": "0c3878f9-5d15-4a18-b10e-96e2f4127b69",
+      "name": "Is new user ?"
+    },
+    {
+      "parameters": {
+        "tableId": "users",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telegram_id",
+              "fieldValue": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+            },
+            {
+              "fieldId": "first_name",
+              "fieldValue": "={{ $('Telegram Trigger').item.json.message.chat.first_name }}"
+            },
+            {
+              "fieldId": "timezone",
+              "fieldValue": "America/Chicago"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -704
+      ],
+      "id": "9dd81e48-40f8-4c31-b47b-30eea4c5ec9a",
+      "name": "Register user",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=👋 Welcome {{ $('Telegram Trigger').item.json.message.chat.first_name }}!  \nI'm your personal AI assistant for business and personal task management.  \nHere's what I can do:  \n📋 /tasks — View all your pending tasks \n📅 /today — What you need to do today \n➕ /add — Add a task manually \n✅ /done — Mark a task complete \n🗓 /week — Your week summary  \nJust type or send a voice note with your tasks and I'll handle everything automatically!",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        -576
+      ],
+      "id": "6c8efe2d-037d-493b-9fd3-772cd035d07e",
+      "name": "Send welcome",
+      "webhookId": "29e31c0f-f6c9-4830-a6ef-d4f74137ad1c",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.chat.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -208
+      ],
+      "id": "bea095a0-05a4-4050-bc5a-41093c866ff1",
+      "name": "Retrieve all tasks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tasks = $input.all();\nconst chatId = $('Telegram Trigger').first().json.message.chat.id;\n\nif (tasks.length === 0) {\n  return [{ json: { message: \"✅ You have no pending tasks! Enjoy your day.\", chatId } }];\n}\n\nconst business = tasks.filter(t => t.json.category === 'business');\nconst personal = tasks.filter(t => t.json.category === 'personal');\n\nlet msg = `📋 *Your Pending Tasks (${tasks.length} total)*\\n\\n`;\n\nif (business.length > 0) {\n  msg += `🏢 *Business (${business.length})*\\n`;\n  business.forEach(t => {\n    const deadline = t.json.deadline ? ` — due ${t.json.deadline.split('T')[0]}` : '';\n    const priority = t.json.priority === 'high' ? '🔴' : t.json.priority === 'medium' ? '🟡' : '🟢';\n    msg += `${priority} ${t.json.title}${deadline}\\n`;\n  });\n  msg += '\\n';\n}\n\nif (personal.length > 0) {\n  msg += `👤 *Personal (${personal.length})*\\n`;\n  personal.forEach(t => {\n    const deadline = t.json.deadline ? ` — due ${t.json.deadline.split('T')[0]}` : '';\n    const priority = t.json.priority === 'high' ? '🔴' : t.json.priority === 'medium' ? '🟡' : '🟢';\n    msg += `${priority} ${t.json.title}${deadline}\\n`;\n  });\n}\n\nmsg += `\\n_🔴 high  🟡 medium  🟢 low_\\nUse /done to complete a task.`;\nreturn [{ json: { message: msg, chatId } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -208
+      ],
+      "id": "59d94ead-7c70-45f9-a035-9711d5900df6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        -208
+      ],
+      "id": "21c9cd58-49b5-40c4-a7d4-5f1683abc085",
+      "name": "Send tasks",
+      "webhookId": "6f3509e3-d0cb-45ec-9e48-7af734196f32",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.chat.id }}"
+            },
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "pending"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -400
+      ],
+      "id": "af59c2ec-1b38-434f-a259-8ba8bd17778f",
+      "name": "Retrieve today tasks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API key",
+              "value": "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"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 1500,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} (America/Chicago CDT). Write a smart daily briefing for {{ $('Telegram Trigger').item.json.message.chat.first_name }}.\\n\\nAll pending tasks:\\n{{ $('Fetch Today Tasks').all().map(t => `[${t.json.category.toUpperCase()}] ${t.json.title} | due: ${t.json.deadline || 'no deadline'} | priority: ${t.json.priority} | context: ${t.json.context || 'none'}`).join('\\\\n') }}\\n\\nStructure:\\n1. 🔴 *Overdue*\\n2. 📅 *Today — Business*\\n3. 📅 *Today — Personal*\\n4. 👀 *Coming up this week*\\n5. 💡 *Suggestion* — one smart observation about priorities or risks\\n\\nWarm, direct, emojis. Max 500 words. Sent via Telegram.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        -400
+      ],
+      "id": "5f405219-24cf-427d-ad6d-1d2d926b9f96",
+      "name": "Claude today"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.content[0].text }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        -400
+      ],
+      "id": "22c2138a-30ff-40bc-8074-b164071bf5b0",
+      "name": "Send today",
+      "webhookId": "d8faba72-c1ec-42e6-9577-4c389a2277e7",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "➕ *Add a new task*  Describe your task naturally, for example: - \"Call the Houston client about the lease Friday at 2pm\" - \"Book dentist appointment next week, personal\" - \"Send contract to notary by Thursday, high priority\"  I'll extract everything automatically.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "0a0b4732-c302-468d-9122-4bc6700fa2b1",
+      "name": "Ask for task",
+      "webhookId": "23503167-040b-4283-957f-885102ca75d2",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        -16
+      ],
+      "id": "f5d10c9c-4897-4533-9a75-f252040a8730",
+      "name": "Wait for task input",
+      "webhookId": "020fe751-e943-4beb-8d77-548526e95cb6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API key",
+              "value": "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"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 500,\n  \"system\": \"You are a task extraction assistant. Extract the task from the user message and return ONLY a valid JSON object. No explanation, no markdown, no backticks. Fields required: title (string), category ('business' or 'personal'), deadline (ISO 8601 in America/Chicago timezone or null), priority ('high'/'medium'/'low'), context (string or null), recurrent (boolean), recurrence_rule ('daily'/'weekly'/'monthly' or null).\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} CDT. Extract this task: {{ $json.message.text }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        896,
+        -16
+      ],
+      "id": "8ae0a141-56a1-4281-bd77-4f07ded59ac1",
+      "name": "Claude parse task"
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst text = response.content[0].text.trim();\nconst task = JSON.parse(text);\nconst telegramId = $('Telegram Trigger').first().json.message.chat.id;\n\nreturn [{\n  json: {\n    ...task,\n    user_telegram_id: telegramId,\n    status: 'pending'\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        -16
+      ],
+      "id": "1e97b499-c5e1-4b3c-97ec-68b6ffc30ded",
+      "name": "Prepare task"
+    },
+    {
+      "parameters": {
+        "tableId": "tasks",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $json.title }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $json.category }}"
+            },
+            {
+              "fieldId": "deadline",
+              "fieldValue": "={{ $json.deadline }}"
+            },
+            {
+              "fieldId": "priority",
+              "fieldValue": "={{ $json.priority }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "context",
+              "fieldValue": "={{ $json.context }}"
+            },
+            {
+              "fieldId": "recurrent",
+              "fieldValue": "={{ $json.recurrent }}"
+            },
+            {
+              "fieldId": "recurrence_rule",
+              "fieldValue": "={{ $json.recurrence_rule }}"
+            },
+            {
+              "fieldId": "user_telegram_id",
+              "fieldValue": "={{ $json.user_telegram_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        -16
+      ],
+      "id": "14bf1516-8336-40e3-bebe-540f28bc4bae",
+      "name": "Save task",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=✅ *Task added!*  📌 {{ $('Prepare Task').item.json.title }} \n📁 Category: {{ $('Prepare Task').item.json.category }} \n⚡Priority: {{ $('Prepare Task').item.json.priority }} \n📅 Deadline: {{ $('Prepare Task').item.json.deadline || 'none set' }}  \nSend /tasks to see all your tasks.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        -16
+      ],
+      "id": "71d3fd52-d076-4cb0-995b-ed952a201b9e",
+      "name": "Confirm add",
+      "webhookId": "2990f90d-b89c-47a8-a502-5342a0397aeb",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.chat.id }}"
+            },
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "pending"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        192
+      ],
+      "id": "76127b9c-041e-4e64-b422-19c17710d2c6",
+      "name": "Retrieve for done",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tasks = $input.all();\nconst chatId = $('Telegram Trigger').first().json.message.chat.id;\n\nif (tasks.length === 0) {\n  return [{ json: { message: \"✅ No pending tasks to mark complete!\", chatId, empty: true } }];\n}\n\nlet msg = \"✅ *Which task did you complete?*\\nReply with the number:\\n\\n\";\ntasks.forEach((t, i) => {\n  const emoji = t.json.category === 'business' ? '🏢' : '👤';\n  const deadline = t.json.deadline ? ` — due ${t.json.deadline.split('T')[0]}` : '';\n  msg += `*${i + 1}.* ${emoji} ${t.json.title}${deadline}\\n`;\n});\n\nreturn [{\n  json: {\n    message: msg,\n    chatId,\n    tasks: tasks.map(t => t.json),\n    empty: false\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        192
+      ],
+      "id": "2d3a0fdc-389c-4d8f-b3f6-254568f9c007",
+      "name": "Build done list"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        192
+      ],
+      "id": "e91f83f1-feb0-42a0-b617-88f2fbd8b002",
+      "name": "Send done list",
+      "webhookId": "7db86c4a-cdda-474a-bd53-b9bbf8ebe2b9",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        192
+      ],
+      "id": "938b64a3-1da9-4fe4-997c-e72e9ba240a3",
+      "name": "Wait done reply",
+      "webhookId": "68c5b761-5f34-4013-925e-6e72886a16c4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const reply = $('Telegram Trigger').first().json.message.text;\nconst taskIndex = parseInt(reply.trim()) - 1;\nconst tasks = $('Build Done List').first().json.tasks;\n\nif (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {\n  return [{ json: { error: true, message: \"❌ Invalid number. Please send /done and try again.\", taskId: null, title: null } }];\n}\n\nconst task = tasks[taskIndex];\nreturn [{ json: { error: false, taskId: task.id, title: task.title } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        192
+      ],
+      "id": "6a57de2a-22c0-484a-86a9-1676fb3119cc",
+      "name": "Resolve done"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.taskId }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        192
+      ],
+      "id": "8b159022-be3e-489c-8c6c-530eff8349b0",
+      "name": "Mark done",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=✅ *{{ $('Resolve Done').item.json.title }}* marked as complete! \nWell done 💪",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1792,
+        192
+      ],
+      "id": "d8b527bd-d9e6-4f38-8add-8e6f8e8d67d6",
+      "name": "Confirm done",
+      "webhookId": "7ef97fad-9bff-4c97-b66b-31082ae480fa",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.chat.id }}"
+            },
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "pending"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        384
+      ],
+      "id": "57c7fc8b-4e54-42de-805d-4a240ea8abe7",
+      "name": "Retrieve week tasks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API key",
+              "value": "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"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 1500,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} CDT (America/Chicago). Give {{ $('Telegram Trigger').item.json.message.chat.first_name }} a smart weekly overview.\\n\\nAll pending tasks:\\n{{ $('Fetch Week Tasks').all().map(t => `[${t.json.category.toUpperCase()}] ${t.json.title} | due: ${t.json.deadline || 'no deadline'} | priority: ${t.json.priority} | context: ${t.json.context || 'none'}`).join('\\\\n') }}\\n\\nStructure:\\n📅 *This Week — Business*\\n📅 *This Week — Personal*\\n🔮 *Later / No Deadline*\\n💡 *Weekly Strategy* — workload balance, what needs attention first, any risks\\n\\nWarm, smart, concise. Emojis. Max 600 words.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        384
+      ],
+      "id": "22546d6d-7a71-45ee-ad61-7836d48f5ab8",
+      "name": "Claude week"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.content[0].text }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        384
+      ],
+      "id": "7ddd6a99-d4f6-4c71-be62-7058d854e4e4",
+      "name": "Send week",
+      "webhookId": "c6afb4be-6ea0-4d44-ab54-608439809c9c",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "🧠 Got it, processing your message...",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1344,
+        768
+      ],
+      "id": "2f5c4e65-89f7-4ba2-9343-37102e934bcf",
+      "name": "Ack text",
+      "webhookId": "80314b12-78df-458a-bb2e-d286c231ba9e",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API key",
+              "value": "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"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 1000,\n  \"system\": \"You are a task extraction assistant. Extract all tasks from the user message and return ONLY a valid JSON array. No explanation, no markdown, no backticks. Each task: title (string), category ('business' or 'personal'), deadline (ISO 8601 in America/Chicago timezone or null), priority ('high'/'medium'/'low'), context (string or null), recurrent (boolean), recurrence_rule ('daily'/'weekly'/'monthly' or null).\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} CDT. Extract tasks from: {{ $('Telegram Trigger').item.json.message.text }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1568,
+        672
+      ],
+      "id": "1b04079e-e545-491e-a8e5-eeda8976c4d6",
+      "name": "Claude extract text"
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst text = response.content[0].text.trim();\nconst tasks = JSON.parse(text);\nconst telegramId = $('Telegram Trigger').first().json.message.chat.id;\n\nreturn tasks.map(task => ({\n  json: { ...task, user_telegram_id: telegramId, status: 'pending' }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        672
+      ],
+      "id": "37469b5e-c777-43f7-9a56-d16eb5778041",
+      "name": "Parse text tasks"
+    },
+    {
+      "parameters": {
+        "tableId": "tasks",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $json.title }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $json.category }}"
+            },
+            {
+              "fieldId": "deadline",
+              "fieldValue": "={{ $json.deadline }}"
+            },
+            {
+              "fieldId": "priority",
+              "fieldValue": "={{ $json.priority }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "context",
+              "fieldValue": "={{ $json.context }}"
+            },
+            {
+              "fieldId": "recurrent",
+              "fieldValue": "={{ $json.recurrent }}"
+            },
+            {
+              "fieldId": "recurrence_rule",
+              "fieldValue": "={{ $json.recurrence_rule }}"
+            },
+            {
+              "fieldId": "user_telegram_id",
+              "fieldValue": "={{ $json.user_telegram_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2016,
+        672
+      ],
+      "id": "789fc72d-4ec1-4666-a312-00891e83762e",
+      "name": "Save text tasks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9yMzuL6piXaw0dEa",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "✅ Tasks saved! Send /tasks to see everything or /today for your briefing.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        672
+      ],
+      "id": "47d77db8-1e70-4463-8564-f5b0a9fa8639",
+      "name": "Confirm text",
+      "webhookId": "0e0b0651-9298-4b37-982d-4621c5d3b899",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "🎙️ Transcribing your voice note...",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        576
+      ],
+      "id": "dc3d623a-e5ba-4302-ae2c-6b4441feb451",
+      "name": "Ack voice",
+      "webhookId": "d090d1db-6b01-4464-ba6e-0b2ad50913a6",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot<8625812291:AAFyP-YrKDLk6nikqHjDuOLfSfYE1V3Pshc>/getFile?file_id={{ $('Telegram Trigger').item.json.message.voice.file_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        576
+      ],
+      "id": "094a88e6-8994-4ef4-9263-b20216cf3434",
+      "name": "Get file path"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/file/bot<8625812291:AAFyP-YrKDLk6nikqHjDuOLfSfYE1V3Pshc>/{{ $json.result.file_path }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        896,
+        576
+      ],
+      "id": "0ce2e7bf-580a-44fe-9c0d-6910dafcf3b0",
+      "name": "Download audio"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "name": "language",
+              "value": "en"
+            },
+            {
+              "name": "file"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1120,
+        576
+      ],
+      "id": "9b789e83-5d93-4ec2-bf67-752b609eea5d",
+      "name": "Whisper",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "FBGobz8VkBIMDYul",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=📝 I heard: _{{ $json.text }}_",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1344,
+        576
+      ],
+      "id": "41f5a3f0-afea-4e3d-90c2-63e9fe3610c6",
+      "name": "Confirm transcription",
+      "webhookId": "b1243b13-1aca-4143-b765-04ca79fee87e",
+      "credentials": {
+        "telegramApi": {
+          "id": "mti0vesUP2Vt2oSa",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Check user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve today tasks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve all tasks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ask for task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve for done",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve week tasks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ack voice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ack text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check user": {
+      "main": [
+        [
+          {
+            "node": "Is new user ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is new user ?": {
+      "main": [
+        [
+          {
+            "node": "Register user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send welcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register user": {
+      "main": [
+        [
+          {
+            "node": "Send welcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve all tasks": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve today tasks": {
+      "main": [
+        [
+          {
+            "node": "Claude today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude today": {
+      "main": [
+        [
+          {
+            "node": "Send today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask for task": {
+      "main": [
+        [
+          {
+            "node": "Wait for task input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for task input": {
+      "main": [
+        [
+          {
+            "node": "Claude parse task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude parse task": {
+      "main": [
+        [
+          {
+            "node": "Prepare task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare task": {
+      "main": [
+        [
+          {
+            "node": "Save task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save task": {
+      "main": [
+        [
+          {
+            "node": "Confirm add",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve for done": {
+      "main": [
+        [
+          {
+            "node": "Build done list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build done list": {
+      "main": [
+        [
+          {
+            "node": "Send done list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send done list": {
+      "main": [
+        [
+          {
+            "node": "Wait done reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait done reply": {
+      "main": [
+        [
+          {
+            "node": "Resolve done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve done": {
+      "main": [
+        [
+          {
+            "node": "Mark done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark done": {
+      "main": [
+        [
+          {
+            "node": "Confirm done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve week tasks": {
+      "main": [
+        [
+          {
+            "node": "Claude week",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude week": {
+      "main": [
+        [
+          {
+            "node": "Send week",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ack text": {
+      "main": [
+        [
+          {
+            "node": "Claude extract text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude extract text": {
+      "main": [
+        [
+          {
+            "node": "Parse text tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse text tasks": {
+      "main": [
+        [
+          {
+            "node": "Save text tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save text tasks": {
+      "main": [
+        [
+          {
+            "node": "Confirm text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ack voice": {
+      "main": [
+        [
+          {
+            "node": "Get file path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get file path": {
+      "main": [
+        [
+          {
+            "node": "Download audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download audio": {
+      "main": [
+        [
+          {
+            "node": "Whisper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whisper": {
+      "main": [
+        [
+          {
+            "node": "Confirm transcription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirm transcription": {
+      "main": [
+        [
+          {
+            "node": "Claude extract text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "6bb02fc8-2e2f-4302-b004-fb9bcff50f10",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d8e987f79196169d549afe52af76084cb05549f9f5516dad887ca675216e88f2"
+  },
+  "id": "iU5nLXqmHvvJGxXm",
+  "tags": []
+}
