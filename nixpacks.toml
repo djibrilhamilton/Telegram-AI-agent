@@ -1,0 +1,5 @@
+[phases.build]
+cmds = []
+
+[start]
+cmd = "sh -c 'while true; do wget -qO- \"https://api.telegram.org/bot${8625812291:AAFyP-YrKDLk6nikqHjDuOLfSfYE1V3Pshc}/setWebhook?url=${https://n8n-production-02fe2.up.railway.app/webhook-test/4b0ae279-c1bb-41cc-a674-3fc99668947b/webhook}\"; echo \"\"; sleep 3600; done'"
