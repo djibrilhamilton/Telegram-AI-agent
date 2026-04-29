@@ -17,8 +17,8 @@
         0,
         0
       ],
-      "id": "6da6e71f-9578-4723-a09d-705e72601a32",
-      "name": "Every hour"
+      "id": "0212ccd0-329a-4af1-ab55-455850d2bed6",
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
@@ -31,18 +31,18 @@
         208,
         0
       ],
-      "id": "d5909de2-3dda-4837-b35b-affe7e01efcd",
+      "id": "68460fce-5458-4681-9997-64d3c8864a88",
       "name": "Get all users",
       "credentials": {
         "supabaseApi": {
-          "id": "9yMzuL6piXaw0dEa",
+          "id": "2SVM6Mc31MYw3MJ6",
           "name": "Supabase account"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "const users = $input.all();\nconst now = new Date();\nconst cdtTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Chicago' }));\nconst currentHour = cdtTime.getHours();\n\nconst morningUsers = [];\nconst eveningUsers = [];\n\nfor (const user of users) {\n  if (currentHour === 8) morningUsers.push(user.json);\n  if (currentHour === 19) eveningUsers.push(user.json);\n}\n\nreturn [{ json: { morningUsers, eveningUsers, currentHour } }];"
+        "jsCode": "const users = $input.all();\nconst now = new Date();\nconst cdtTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Chicago' }));\nconst currentHour = cdtTime.getHours();\n\nconst morningUsers = [];\nconst eveningUsers = [];\n\nfor (const user of users) {\n  if (currentHour === 7) morningUsers.push(user.json);\n  if (currentHour === 22) eveningUsers.push(user.json);\n}\n\nreturn [{ json: { morningUsers, eveningUsers, currentHour } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -50,7 +50,7 @@
         416,
         0
       ],
-      "id": "56fbea40-18b2-4959-a311-5f5fa74bce1d",
+      "id": "a9552c38-0083-42c9-b923-eda81b9ef4cc",
       "name": "Filter by CDT hour"
     },
     {
@@ -59,12 +59,12 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict",
+            "typeValidation": "loose",
             "version": 3
           },
           "conditions": [
             {
-              "id": "3ac8bda1-1b02-4aed-9587-e8d4e1d8eb67",
+              "id": "e0e773d0-80c7-4dc8-917d-f73fee6bbbbe",
               "leftValue": "={{ $json.morningUsers.length }}",
               "rightValue": 0,
               "operator": {
@@ -75,6 +75,7 @@
           ],
           "combinator": "and"
         },
+        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
@@ -83,7 +84,7 @@
         624,
         0
       ],
-      "id": "96558758-ce9b-4f58-b9f5-4e463ea2c959",
+      "id": "bc0abf57-1e54-433d-8762-a68f66812a5f",
       "name": "Is morning ?"
     },
     {
@@ -96,8 +97,101 @@
         832,
         -96
       ],
-      "id": "39db210d-47db-4abd-aa86-ad987cb9210b",
+      "id": "61aaa3b3-ec13-4a8c-86fb-5e1fc5f7d3bc",
       "name": "Morning loop"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tasks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.telegram_id }}"
+            },
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "pending"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        960,
+        112
+      ],
+      "id": "42f84a84-9630-4274-803a-41ae837f5270",
+      "name": "Retrieve morning tasks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "2SVM6Mc31MYw3MJ6",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "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"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 1500,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} CDT. Write a smart morning briefing for {{ $('Morning Loop').item.json.first_name }}.\\n\\nPending tasks:\\n{{ $('Fetch Morning Tasks').all().map(t => `[${t.json.category.toUpperCase()}] ${t.json.title} | due: ${t.json.deadline || 'no deadline'} | priority: ${t.json.priority}`).join('\\\\n') }}\\n\\nStructure:\\n1. 🔴 Overdue\\n2. 📅 Today — Business\\n3. 📅 Today — Personal\\n4. 👀 Coming up this week\\n5. 💡 Smart suggestion\\n\\nWarm, concise, emojis. Max 500 words.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1152,
+        112
+      ],
+      "id": "47030ba3-4082-4c81-8d92-4173391bad9b",
+      "name": "Claude morning"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Morning loop').item.json.telegram_id }}",
+        "text": "={{ $json.content[0].text }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        112
+      ],
+      "id": "485a0f15-b592-4f8b-902c-fb6cc660bd98",
+      "name": "Send morning",
+      "webhookId": "471c4635-8b4d-4f93-8e05-a1897b7386c7",
+      "credentials": {
+        "telegramApi": {
+          "id": "Btba9AMkcdUkV6fI",
+          "name": "Telegram account"
+        }
+      }
     },
     {
       "parameters": {
@@ -105,12 +199,12 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict",
+            "typeValidation": "loose",
             "version": 3
           },
           "conditions": [
             {
-              "id": "3a153a98-8c32-4f8c-93a5-5a36c5ea57d3",
+              "id": "0a305a6a-f1af-4874-bc89-c4d37862f055",
               "leftValue": "={{ $json.eveningUsers.length }}",
               "rightValue": 0,
               "operator": {
@@ -121,15 +215,16 @@
           ],
           "combinator": "and"
         },
+        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        832,
-        96
+        688,
+        320
       ],
-      "id": "b6bce8c3-2d12-4787-8c2e-d7a997e02acf",
+      "id": "6e86adf6-8551-46cd-b87e-1ead0760270c",
       "name": "Is evening ?"
     },
     {
@@ -139,10 +234,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1040,
-        80
+        960,
+        304
       ],
-      "id": "24e9e878-402c-4013-beaa-c59016a4c62a",
+      "id": "828c41b7-da1d-4015-b2fc-55f187217b2c",
       "name": "Evening loop"
     },
     {
@@ -167,122 +262,29 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1056,
-        -144
+        1088,
+        432
       ],
-      "id": "9885280e-f132-4d4b-be4e-326e6b3cc26c",
-      "name": "Retrieve morning tasks",
-      "credentials": {
-        "supabaseApi": {
-          "id": "9yMzuL6piXaw0dEa",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "API key",
-              "value": "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"
-            },
-            {
-              "name": "anthropic-version",
-              "value": "2023-06-01"
-            },
-            {
-              "name": "content-type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 1500,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Today is {{ $now.toISO() }} CDT. Write a smart morning briefing for {{ $('Morning Loop').item.json.first_name }}.\\n\\nPending tasks:\\n{{ $('Fetch Morning Tasks').all().map(t => `[${t.json.category.toUpperCase()}] ${t.json.title} | due: ${t.json.deadline || 'no deadline'} | priority: ${t.json.priority}`).join('\\\\n') }}\\n\\nStructure:\\n1. 🔴 Overdue\\n2. 📅 Today — Business\\n3. 📅 Today — Personal\\n4. 👀 Coming up this week\\n5. 💡 Smart suggestion\\n\\nWarm, concise, emojis. Max 500 words.\"\n    }\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        1232,
-        -144
-      ],
-      "id": "3867b027-3575-4462-9f6a-7fee82d3563e",
-      "name": "Claude morning"
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $('Morning Loop').item.json.telegram_id }}",
-        "text": "={{ $json.content[0].text }}",
-        "additionalFields": {
-          "parse_mode": "Markdown"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1408,
-        -144
-      ],
-      "id": "ac8b4787-4e90-42aa-b279-ddb790d55b81",
-      "name": "Send morning text",
-      "webhookId": "1276809f-f503-45ba-ad36-85ca3b48adf1",
-      "credentials": {
-        "telegramApi": {
-          "id": "mti0vesUP2Vt2oSa",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "tableId": "tasks",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "user_telegram_id",
-              "condition": "eq",
-              "keyValue": "$('Evening Loop').item.json.telegram_id"
-            },
-            {
-              "keyName": "status",
-              "condition": "eq",
-              "keyValue": "pending"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        1248,
-        96
-      ],
-      "id": "f6f15ac7-0946-48f4-b0a2-d080bdc998a5",
+      "id": "026eb80b-5d80-430d-a7fb-263d1ecf911b",
       "name": "Retrieve evening tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "9yMzuL6piXaw0dEa",
+          "id": "2SVM6Mc31MYw3MJ6",
           "name": "Supabase account"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "const user = $('Evening Loop').first().json;\nconst tasks = $input.all();\n\nif (tasks.length === 0) {\n  return [{ json: { message: `🌙 Good evening ${user.first_name}! No pending tasks. Great work today! 🎉`, chatId: user.telegram_id } }];\n}\n\nlet msg = `🌙 *Evening Check-in — ${user.first_name}*\\n\\nStill pending:\\n\\n`;\nconst business = tasks.filter(t => t.json.category === 'business');\nconst personal = tasks.filter(t => t.json.category === 'personal');\n\nif (business.length > 0) {\n  msg += `🏢 *Business:*\\n`;\n  business.forEach(t => { msg += `• ${t.json.title}\\n`; });\n  msg += '\\n';\n}\nif (personal.length > 0) {\n  msg += `👤 *Personal:*\\n`;\n  personal.forEach(t => { msg += `• ${t.json.title}\\n`; });\n}\n\nmsg += `\\nHave a good evening! 🌟`;\nreturn [{ json: { message: msg, chatId: user.telegram_id } }];"
+        "jsCode": "const user = $('Evening Loop').first().json;\nconst tasks = $input.all();\n\nif (tasks.length === 0) {\n  return [{ json: { message: `🌙 Good night ${user.first_name}! No pending tasks. Great work today! 🎉`, chatId: user.telegram_id } }];\n}\n\nlet msg = `🌙 *Evening Check-in — ${user.first_name}*\\n\\nStill pending:\\n\\n`;\nconst business = tasks.filter(t => t.json.category === 'business');\nconst personal = tasks.filter(t => t.json.category === 'personal');\n\nif (business.length > 0) {\n  msg += `🏢 *Business:*\\n`;\n  business.forEach(t => { msg += `• ${t.json.title}\\n`; });\n  msg += '\\n';\n}\nif (personal.length > 0) {\n  msg += `👤 *Personal:*\\n`;\n  personal.forEach(t => { msg += `• ${t.json.title}\\n`; });\n}\n\nmsg += `\\nHave a good night! 🌙`;\nreturn [{ json: { message: msg, chatId: user.telegram_id } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1424,
-        96
+        1248,
+        432
       ],
-      "id": "90c9ac3b-14fa-4902-a96b-025fe74c22dc",
+      "id": "8792c2aa-65ef-4f64-8ed1-a9d7a6cc052c",
       "name": "Format evening"
     },
     {
@@ -296,15 +298,15 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1600,
-        96
+        1392,
+        432
       ],
-      "id": "8c238290-e558-4868-acb1-d6ebaa38739b",
-      "name": "Send evening text",
-      "webhookId": "05c673f8-309b-481c-af2f-592c129e45cd",
+      "id": "1e881b31-d4d8-460c-be08-f2f040c6993f",
+      "name": "Send evening",
+      "webhookId": "a4e03b76-baeb-4d2c-ade8-35e425485f2d",
       "credentials": {
         "telegramApi": {
-          "id": "mti0vesUP2Vt2oSa",
+          "id": "Btba9AMkcdUkV6fI",
           "name": "Telegram account"
         }
       }
@@ -312,7 +314,7 @@
   ],
   "pinData": {},
   "connections": {
-    "Every hour": {
+    "Schedule Trigger": {
       "main": [
         [
           {
@@ -375,6 +377,39 @@
         ]
       ]
     },
+    "Retrieve morning tasks": {
+      "main": [
+        [
+          {
+            "node": "Claude morning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude morning": {
+      "main": [
+        [
+          {
+            "node": "Send morning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send morning": {
+      "main": [
+        [
+          {
+            "node": "Morning loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Is evening ?": {
       "main": [
         [
@@ -398,39 +433,6 @@
         ]
       ]
     },
-    "Retrieve morning tasks": {
-      "main": [
-        [
-          {
-            "node": "Claude morning",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Claude morning": {
-      "main": [
-        [
-          {
-            "node": "Send morning text",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send morning text": {
-      "main": [
-        [
-          {
-            "node": "Morning loop",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Retrieve evening tasks": {
       "main": [
         [
@@ -446,14 +448,14 @@
       "main": [
         [
           {
-            "node": "Send evening text",
+            "node": "Send evening",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Send evening text": {
+    "Send evening": {
       "main": [
         [
           {
@@ -465,16 +467,16 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "47991f2d-a444-45df-aa9c-fec013597d62",
+  "versionId": "b216834e-369e-4925-8d73-5b45262aab3e",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "d8e987f79196169d549afe52af76084cb05549f9f5516dad887ca675216e88f2"
+    "instanceId": "86613c2f25d6b0e49f2c8c09a37c260a671d595a14eaf81d59ad8e742d91fa23"
   },
-  "id": "wglRkOgLNEe0rJ7t",
+  "id": "xejTQoc5ku2QLciM",
   "tags": []
 }
