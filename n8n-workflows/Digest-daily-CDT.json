@@ -35,7 +35,7 @@
       "name": "Get all users",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -129,7 +129,7 @@
       "name": "Retrieve morning tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -143,7 +143,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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"
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
@@ -191,7 +191,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -272,7 +272,7 @@
       "name": "Retrieve evening tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -310,7 +310,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
