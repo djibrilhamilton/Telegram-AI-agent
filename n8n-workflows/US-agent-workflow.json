@@ -215,7 +215,7 @@
       "executeOnce": false,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -249,7 +249,7 @@
       "name": "Retrieve all tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -287,7 +287,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -321,7 +321,7 @@
       "name": "Retrieve today tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -335,7 +335,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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"
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
@@ -383,7 +383,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -408,7 +408,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -437,7 +437,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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 "
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
@@ -530,7 +530,7 @@
       "name": "Save task",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -555,7 +555,7 @@
       "executeOnce": false,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -589,7 +589,7 @@
       "name": "Retrieve for done",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -627,7 +627,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -726,7 +726,7 @@
       "name": "Retrieve week tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -751,7 +751,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -776,7 +776,7 @@
       "executeOnce": false,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -790,7 +790,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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 "
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
@@ -910,7 +910,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -934,7 +934,7 @@
       "webhookId": "98aa3f9b-905e-4749-acd7-9a7a15b1ee3c",
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -972,7 +972,7 @@
       "webhookId": "9d0775fd-3cf3-4a9a-817f-a94522301e7f",
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -986,7 +986,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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"
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
@@ -1081,7 +1081,7 @@
       "name": "Save voice tasks",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -1106,7 +1106,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -1129,7 +1129,7 @@
       "webhookId": "e28b8fe0-aef7-40a9-b470-7d84c6343498",
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -1158,7 +1158,7 @@
       "name": "Get user",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -1228,7 +1228,7 @@
       "name": "Create user",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -1297,7 +1297,7 @@
       "name": "Retrieve pending for done",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -1347,7 +1347,7 @@
       "name": "Update a row",
       "credentials": {
         "supabaseApi": {
-          "id": "2SVM6Mc31MYw3MJ6",
+          "id": "XXX",
           "name": "Supabase account"
         }
       }
@@ -1372,7 +1372,7 @@
       "executeOnce": false,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -1395,7 +1395,7 @@
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "Btba9AMkcdUkV6fI",
+          "id": "XXX",
           "name": "Telegram account"
         }
       }
@@ -1455,7 +1455,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "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 "
+              "value": "XXX"
             },
             {
               "name": "anthropic-version",
